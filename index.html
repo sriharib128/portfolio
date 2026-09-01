@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Srihari Bandarupalli · Research Engineer</title>
+<meta name="description" content="Srihari Bandarupalli is a research engineer at BharatGen who designs and trains document foundation models (Patram 1.5; DocLayout-VL, ECCV 2026) and builds the ML infrastructure under them: storage, data pipelines, distributed training and cluster tooling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #f3f5f7;
+    --surface: #ffffff;
+    --ink: #141d2b;
+    --ink-2: #3d4756;
+    --muted: #5f6b7a;
+    --line: #dce1e7;
+    --line-strong: #b9c2cd;
+    --accent: #0e6b57;
+    --accent-ink: #0a5645;
+    --accent-soft: #e4f1ec;
+    --display: "Familjen Grotesk", "Instrument Sans", system-ui, sans-serif;
+    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --wrap: 1080px;
+    --radius: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    margin: 0;
+    min-width: 320px;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, p, dl, dd, ul, ol, figure { margin: 0; }
+  ul, ol { padding: 0; }
+  a { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  a:hover { color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  code { font-family: var(--mono); font-size: 0.88em; }
+  .wrap { width: min(100% - 40px, var(--wrap)); margin-inline: auto; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .skip {
+    position: absolute; left: 16px; top: -60px; z-index: 100;
+    padding: 8px 14px; background: var(--ink); color: #fff; border-radius: 6px;
+    font-weight: 600; text-decoration: none;
+  }
+  .skip:focus { top: 12px; }
+
+  /* ---------- top bar ---------- */
+  .top {
+    position: sticky; top: 0; z-index: 20;
+    background: rgb(243 245 247 / 92%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    min-height: 62px;
+  }
+  .brand {
+    font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.01em;
+    color: var(--ink); text-decoration: none; white-space: nowrap;
+  }
+  .top nav ul { display: flex; gap: 22px; list-style: none; }
+  .top nav a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+  .top nav a:hover { color: var(--accent-ink); text-decoration: underline; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border: 1px solid var(--ink); border-radius: 999px;
+    color: var(--ink); background: transparent; text-decoration: none;
+    font-size: 14px; font-weight: 600; white-space: nowrap;
+  }
+  .btn:hover { background: var(--ink); color: #fff; }
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 84px 0 56px; }
+  .kicker {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+  .hero h1 {
+    margin-top: 18px;
+    max-width: 20ch;
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(34px, 5.2vw, 58px); line-height: 1.04; letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .lede {
+    margin-top: 26px; max-width: 66ch;
+    font-size: clamp(17px, 1.6vw, 19px); line-height: 1.55; color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .facts {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;
+    margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line-strong);
+  }
+  .facts dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+  .facts dd { margin-top: 6px; font-size: 15px; line-height: 1.45; }
+  .facts dd small { display: block; color: var(--muted); font-size: 13px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 0; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 26px; }
+  .section-head h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.02em; line-height: 1.15;
+  }
+  .section-head p { max-width: 56ch; color: var(--ink-2); font-size: 15.5px; }
+
+  /* ---------- the stack ---------- */
+  .stack { padding-top: 24px; }
+  .strata { list-style: none; border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .stratum {
+    display: grid;
+    grid-template-columns: 118px minmax(0, 1fr) 190px;
+    gap: 22px; align-items: start;
+    padding: 20px 22px;
+    border-top: 1px solid var(--line);
+    background: hsl(212 22% calc(100% - var(--depth) * 1.5%));
+  }
+  .stratum:first-child { border-top: 0; }
+  .stratum:hover, .stratum:focus-within { box-shadow: inset 3px 0 0 var(--accent); }
+  .layer {
+    padding-top: 3px;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stratum h3 { font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: -0.01em; line-height: 1.25; }
+  .stratum .what p { margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+  .metric b { display: block; font-family: var(--mono); font-weight: 500; font-size: 18px; letter-spacing: -0.01em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .metric span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+
+  /* ---------- selected work ---------- */
+  .work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .work {
+    display: flex; flex-direction: column;
+    padding: 26px 26px 24px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .work header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .work h3 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.015em; }
+  .work .tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .work dl { flex: 1 1 auto; margin-top: 18px; }
+  .work dl div { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 14px; padding: 11px 0; border-top: 1px solid var(--line); }
+  .work dt { padding-top: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent-ink); }
+  .work dd { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .work dd strong { color: var(--ink); font-weight: 600; }
+  .work ul.measured { list-style: none; }
+  .work ul.measured li { position: relative; padding-left: 14px; }
+  .work ul.measured li + li { margin-top: 4px; }
+  .work ul.measured li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .work .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: 14px; font-weight: 500; }
+
+  /* ---------- also built ---------- */
+  .also { list-style: none; border-top: 1px solid var(--line-strong); }
+  .also li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr) 200px; gap: 22px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .also h3 { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+  .also h3 small { display: block; margin-top: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .also p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+  .also .metric b { font-size: 16px; }
+
+  /* ---------- blog ---------- */
+  .posts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .post { display: block; padding: 24px 26px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: inherit; }
+  .post:hover { border-color: var(--accent); }
+  .post .tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .post h3 { margin-top: 10px; font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.015em; line-height: 1.25; color: var(--ink); }
+  .post:hover h3 { color: var(--accent-ink); text-decoration: underline; }
+  .post p { margin-top: 10px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .post .read { display: block; margin-top: 14px; font-size: 13.5px; font-weight: 600; color: var(--accent-ink); }
+
+  /* ---------- publications ---------- */
+  .pubs { list-style: none; border-top: 1px solid var(--line-strong); }
+  .pubs li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 22px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .pubs .venue { font-family: var(--mono); font-size: 12.5px; padding-top: 3px; color: var(--ink); }
+  .pubs .title { font-size: 15.5px; line-height: 1.45; }
+  .pubs .meta { margin-top: 3px; font-size: 13px; color: var(--muted); }
+  .badge { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; vertical-align: middle; }
+
+  /* ---------- experience ---------- */
+  .xp-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 40px; }
+  .xp { list-style: none; border-top: 1px solid var(--line-strong); }
+  .xp li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 22px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .xp .when { font-family: var(--mono); font-size: 12.5px; padding-top: 4px; color: var(--muted); }
+  .xp h3 { font-family: var(--display); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+  .xp h3 span { font-family: var(--body); font-weight: 400; font-size: 15px; color: var(--ink-2); }
+  .xp p { margin-top: 6px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .aside-block h3 { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--line-strong); }
+  .aside-block + .aside-block { margin-top: 28px; }
+  .aside-block p, .aside-block li { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .aside-block p strong { color: var(--ink); font-weight: 600; }
+  .aside-block p + p { margin-top: 10px; }
+  .aside-block ul { list-style: none; }
+  .aside-block li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .aside-block li b { color: var(--ink); font-weight: 600; }
+  .skills dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+  .skills dd { margin: 3px 0 12px; font-size: 14.5px; color: var(--ink-2); }
+
+  /* ---------- contact ---------- */
+  .contact { padding: 72px 0 40px; border-top: 1px solid var(--line-strong); background: var(--surface); }
+  .contact h2 { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.02em; }
+  .contact p { margin-top: 12px; max-width: 58ch; color: var(--ink-2); }
+  .contact .row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .fine { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); max-width: 70ch; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .stratum { grid-template-columns: 104px minmax(0, 1fr) 160px; }
+    .also li { grid-template-columns: minmax(0, 1fr) 170px; }
+    .also p { grid-column: 1 / -1; }
+    .xp-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .top .wrap { flex-wrap: wrap; padding: 10px 0; row-gap: 8px; }
+    .top nav { order: 3; width: 100%; }
+    .top nav ul { gap: 16px; flex-wrap: wrap; }
+    .hero { padding: 56px 0 44px; }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stratum { grid-template-columns: 1fr; gap: 10px; padding: 18px 16px; }
+    .layer { padding-top: 0; }
+    .work-grid, .posts { grid-template-columns: 1fr; }
+    .work { padding: 22px 18px; }
+    .work dl div { grid-template-columns: 1fr; gap: 4px; }
+    .also li { grid-template-columns: 1fr; gap: 8px; }
+    .pubs li { grid-template-columns: 1fr; gap: 4px; }
+    .xp li { grid-template-columns: 1fr; gap: 4px; }
+    section { padding: 48px 0; }
+  }
+  @media (max-width: 440px) {
+    .facts { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  @media print {
+    .top, .skip { display: none; }
+    body { background: #fff; }
+    a { color: inherit; }
+  }
+</style>
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Srihari Bandarupalli</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#blog">Blogs</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="resume.pdf">Resume (PDF)</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="kicker">Research Engineer · Foundation models · BharatGen Vision Team · Hyderabad, India</p>
+      <h1 id="hero-title">I build foundation models, and the infrastructure that trains them.</h1>
+      <p class="lede">At BharatGen I designed the 8&#8209;billion&#8209;token training corpus for <strong>Patram 1.5</strong>, the team's document foundation model, and am now training it on 128 GPUs. I first&#8209;authored <strong>DocLayout&#8209;VL</strong>, a layout foundation model accepted to ECCV 2026. And I wrote the infrastructure under both: the storage layer, the data&#8209;pipeline engine, the training framework, and the cluster tooling the team runs on.</p>
+      <dl class="facts">
+        <div><dt>Currently</dt><dd>Research Engineer, BharatGen<small>Sept 2025 – present</small></dd></div>
+        <div><dt>Education</dt><dd>B.Tech + MS by Research (ECE), IIIT Hyderabad<small>2021 – 2026 · CGPA 9.2 · Department Gold Medal</small></dd></div>
+        <div><dt>Focus</dt><dd>Foundation models, ML infrastructure, distributed systems<small>Python · Go · C/C++</small></dd></div>
+        <div><dt>Contact</dt><dd><a href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a><small><a href="resume.pdf">Resume (PDF)</a></small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="stack" class="stack" aria-labelledby="stack-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="stack-title">One stack, built bottom&#8209;up</h2>
+        <p>Each layer unblocked the one above it. The models are trained on the framework; the framework trains on data the pipeline engine produced; the engine reads through the storage layer; and all of it runs on the cluster tooling at the bottom.</p>
+      </div>
+
+      <ol class="strata" reversed aria-label="Layers of the stack, from top to bottom">
+        <li class="stratum" style="--depth: 0">
+          <span class="layer">Models</span>
+          <div class="what">
+            <h3>Patram 1.5 and DocLayout&#8209;VL</h3>
+            <p>Patram 1.5 is BharatGen's document vision&#8209;language model, now training on 128 GPUs on a corpus and task taxonomy I designed. DocLayout&#8209;VL reads a page and writes out its layout as a tree, grounding every node as a pixel mask, steered by natural&#8209;language prompts; accepted to ECCV 2026.</p>
+          </div>
+          <div class="metric"><b>79.4 vs 45.8</b><span>DocLayout&#8209;VL on HOPLay&#8209;Docs&#8209;Bench against the best fine&#8209;tuned baseline</span></div>
+        </li>
+
+        <li class="stratum" style="--depth: 1">
+          <span class="layer">Training</span>
+          <div class="what">
+            <h3>Training framework</h3>
+            <p>The framework both models above are trained on. Models, datasets, dataloaders and evaluation are registered independently, so a new combination is a config change rather than new code. Non&#8209;compute tensors stay on the CPU so GPU memory holds only what the model computes on, and multi&#8209;node training runs over AWS EFA at close to the interconnect's ceiling.</p>
+          </div>
+          <div class="metric"><b>97.8%</b><span>of single&#8209;node all&#8209;reduce bandwidth retained across two nodes</span></div>
+        </li>
+
+        <li class="stratum" style="--depth: 2">
+          <span class="layer">Pipelines</span>
+          <div class="what">
+            <h3>Patram&#8209;Ingest</h3>
+            <p>The engine that generated the training data for the models above. A pipeline is declared as a graph of stages that fan out, merge, and route individual items down different paths at runtime; every stage runs concurrently, so the pipeline moves at the speed of its slowest stage rather than the sum of all of them. Any machine can die mid&#8209;run and the run resumes where it left off, with nothing lost and nothing processed twice.</p>
+          </div>
+          <div class="metric"><b>8.47M prompts</b><span>one run, scaled 5 &rarr; 24 nodes (192 GPUs) unattended, 99.977% completed</span></div>
+        </li>
+
+        <li class="stratum" style="--depth: 3">
+          <span class="layer">Storage</span>
+          <div class="what">
+            <h3>Patram&#8209;FS</h3>
+            <p>Datasets are packed into a few hundred large shards for the storage layer, while every sample keeps its own byte address for the training layer. Training runs now read from node&#8209;local NVMe and S3 only, at local&#8209;disk speed, with the shared network filesystem off the data path entirely.</p>
+          </div>
+          <div class="metric"><b>10M &rarr; 200</b><span>storage requests per training run</span></div>
+        </li>
+
+        <li class="stratum" style="--depth: 4">
+          <span class="layer">Operations</span>
+          <div class="what">
+            <h3>Cluster&#8209;Supervision</h3>
+            <p>256 GPUs across 32 nodes, running training, inference and data generation side by side, managed from a single dashboard. A DaemonSet samples about 50 metric families on every node every 10 seconds, aligned to the wall clock so readings from different nodes line up exactly, into Postgres with 27 transition&#8209;based alert rules.</p>
+          </div>
+          <div class="metric"><b>~1 minute</b><span>for a replaced node to auto&#8209;rejoin the fleet, no manual step</span></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="work-title">Selected work</h2>
+        <p>Four projects in more detail: the problem, what I built, and what was measured.</p>
+      </div>
+
+      <div class="work-grid">
+
+        <article class="work" aria-labelledby="w-dl">
+          <header>
+            <h3 id="w-dl">DocLayout&#8209;VL</h3>
+            <span class="tag">Research · ECCV 2026</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>Document layout analysis stayed closed&#8209;set while the rest of vision moved to promptable models: a fixed label list, flat boxes, no hierarchy, and retraining as the only way to add a region type.</dd></div>
+            <div><dt>Built</dt><dd>A VLM that generates the layout as a serialized tree with an anchor token per element; a Hierarchical Grounding Contextualizer that applies attention constrained by the predicted tree; a SAM&#8209;based decoder that turns each anchor into a mask. HOPLay&#8209;Docs&#8209;80M (2.5M pages, 80M masks, 40 languages) and a 5,000&#8209;document benchmark, because no dataset with hierarchy, open&#8209;set labels and prompts existed. Trained on 64 H100s with DeepSpeed ZeRO&#8209;3.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>79.4 overall on HOPLay&#8209;Docs&#8209;Bench, against 45.8 for the best fine&#8209;tuned baseline, 37.2 for Gemini 3 Pro and 28.6 for GPT&#8209;5.2</li>
+                <li>Zero&#8209;shot on ten public layout benchmarks, it matches or beats detectors trained on each one</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><a href="https://doclayoutvl.github.io/">Project page</a></p>
+        </article>
+
+        <article class="work" aria-labelledby="w-data">
+          <header>
+            <h3 id="w-data">Patram 1.5</h3>
+            <span class="tag">Foundation model · Data and training</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>"Make the model good at documents" is not a plan. Without a written specification of what to learn, nobody can say what is missing from a corpus, whether it is done, or what a new dataset adds.</dd></div>
+            <div><dt>Built</dt><dd>A taxonomy of 186 atomic tasks across 12 capabilities and 86 document properties, with a compatibility matrix whose gates are parsed and checked by a verifier. A deficit&#8209;weighted sampler steers generation toward under&#8209;filled tasks, and every record carries the design version that produced it.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>8B tokens of training data generated against the spec; the delivered task mix matched the design</li>
+                <li>Now training a 7B document model on 128 GPUs</li>
+              </ul>
+            </dd></div>
+          </dl>
+        </article>
+
+        <article class="work" aria-labelledby="w-ingest">
+          <header>
+            <h3 id="w-ingest">Patram&#8209;Ingest</h3>
+            <span class="tag">Pipelines · Python, PostgreSQL, vLLM</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>Building the corpus meant running GPU models over hundreds of millions of images for days on a shared cluster where nodes get reclaimed, servers die and processes get killed. Hand&#8209;written scripts lost or duplicated work on every crash.</dd></div>
+            <div><dt>Built</dt><dd>A data engine for running GPU models over very large image sets. Pipelines are declared as a graph of stages rather than hand&#8209;coded: stages fan out, merge, and route individual items down different paths at runtime, and every stage runs in parallel with the others so nothing sits idle waiting on the one before it. The same engine scales from one machine to the full fleet, and any machine can die at any moment: the run resumes where it left off with a few minutes of work redone, nothing lost and nothing processed twice.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>Largest run: 8.47M prompts through a 27B model, scaled live from 5 to 24 nodes (192 GPUs) unattended, 99.977% completed</li>
+                <li>+29% throughput on identical hardware after removing GPU idle time between batches</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><a href="https://sriharib128.github.io/patram-ingest/">Technical write&#8209;up</a></p>
+        </article>
+
+        <article class="work" aria-labelledby="w-fs">
+          <header>
+            <h3 id="w-fs">Patram&#8209;FS</h3>
+            <span class="tag">Storage · Go, Python</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>A training run over a document dataset touched about ten million small files. Shared filesystem metadata and S3's per&#8209;prefix request&#8209;rate ceiling, not bandwidth, set the pace for 256 GPUs.</dd></div>
+            <div><dt>Built</dt><dd>Datasets packed into uncompressed TAR and JSONL shards so every sample has a fixed byte address. One Go daemon per node deduplicates downloads to local NVMe and warms the kernel page cache; the daemon stays off the read path, so every worker reads at raw <code>pread</code> speed. Prometheus metrics, fleet deploy tooling and a supervisor loop around it.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>~10M → ~200 storage requests per training run, and annotation reads from 297.6 → 26.7 µs</li>
+                <li>Runs on every node of the cluster; training jobs no longer touch the shared filesystem</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><a href="https://sriharib128.github.io/patram-fs/">Technical write&#8209;up</a></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="more-title">Also built</h2>
+      </div>
+      <ul class="also">
+        <li>
+          <h3>Training framework<small>Training · PyTorch, DeepSpeed, Docker, NCCL</small></h3>
+          <p>Two fixes took the trainer from one document per GPU to six: non&#8209;compute tensors such as debug&#8209;only page images stay on the CPU instead of being copied into GPU memory, and validation reduces every mask to seven numbers on each rank before anything is gathered. Multi&#8209;node training then needed an EFA container image, an idempotent node&#8209;init script and the right NCCL environment; eight failure modes are documented, including NCCL silently falling back to TCP. This is the stack DocLayout&#8209;VL was trained on and the ancestor of <code>patram&#8209;core</code>, the team's current trainer. <a href="https://sriharib128.github.io/training-stack/">Technical write&#8209;up</a></p>
+          <div class="metric"><b>1 &rarr; 6</b><span>documents per GPU per step; 97.8% of all&#8209;reduce bandwidth kept across two nodes</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="blog" aria-labelledby="blog-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="blog-title">Blogs</h2>
+      </div>
+      <div class="posts">
+        <a class="post" href="https://sriharib128.github.io/patram-ingest/">
+          <span class="tag">Patram&#8209;Ingest · Data pipelines · 15 min</span>
+          <h3>Crash&#8209;safe inference over hundreds of millions of images</h3>
+          <p>How Patram&#8209;Ingest keeps days&#8209;long GPU inference restartable: a four&#8209;state table, a write&#8209;fsync&#8209;mark commit protocol, failure classification, a worker pool that survives <code>kill -9</code>, and DAG pipelines from two extra states.</p>
+          <span class="read">Read the post</span>
+        </a>
+        <a class="post" href="https://sriharib128.github.io/patram-fs/">
+          <span class="tag">Patram&#8209;FS · Storage · 10 min</span>
+          <h3>Serving millions of training samples from packed shards</h3>
+          <p>Why per&#8209;file storage breaks at ten million files, how packed uncompressed shards keep a per&#8209;sample address, and how one daemon per node plus the kernel page cache brings a run down to about 200 storage requests.</p>
+          <span class="read">Read the post</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications" aria-labelledby="pubs-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="pubs-title">Publications</h2>
+      </div>
+      <ul class="pubs">
+        <li>
+          <span class="venue">ECCV 2026</span>
+          <div><div class="title">DocLayout&#8209;VL: A Foundational Model for Hierarchical, Open&#8209;Set and Promptable Document Layout Segmentation<span class="badge">First author</span></div></div>
+        </li>
+        <li>
+          <span class="venue">IJCNLP&#8209;AACL 2025</span>
+          <div><div class="title">Efficient ASR for Low&#8209;Resource Languages: Leveraging Cross&#8209;Lingual Unlabeled Data<span class="badge">First author</span></div></div>
+        </li>
+        <li>
+          <span class="venue">AI&#8209;ML Systems 2025</span>
+          <div><div class="title">VLMs&#8209;in&#8209;the&#8209;Wild: Bridging the Gap Between Academic Benchmarks and Enterprise Reality<span class="badge">First author</span></div><div class="meta">Work done at Sprinklr</div></div>
+        </li>
+        <li>
+          <span class="venue">Interspeech 2025</span>
+          <div><div class="title">End&#8209;to&#8209;End Speech Translation for Low&#8209;Resource Languages Using Weakly Labeled Data</div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="xp-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="xp-title">Experience</h2>
+      </div>
+      <div class="xp-grid">
+        <ul class="xp">
+          <li>
+            <span class="when">Sept 2025 – present</span>
+            <div>
+              <h3>BharatGen <span>· Research Engineer, Vision Team</span></h3>
+              <p>Foundational document vision&#8209;language models and the stack under them: storage, data pipelines, dataset specification and generation, distributed training, cluster operations. The work above.</p>
+            </div>
+          </li>
+          <li>
+            <span class="when">May – July 2025</span>
+            <div>
+              <h3>Sprinklr <span>· Machine Learning Intern</span></h3>
+              <p>Built an enterprise VLM evaluation framework on production&#8209;like data distributions (published at AI&#8209;ML Systems 2025). Showed that targeted data curation lets a fine&#8209;tuned Qwen&#8209;7B match Qwen&#8209;32B accuracy at 80% lower compute, consolidating more than ten task&#8209;specific visual systems into one model.</p>
+            </div>
+          </li>
+          <li>
+            <span class="when">May 2023 – present</span>
+            <div>
+              <h3>LTRC, IIIT Hyderabad <span>· Undergraduate Researcher, Speech Processing Lab</span></h3>
+              <p>Low&#8209;resource ASR with Prof. Anil Kumar Vuppala. Showed that phonetic&#8209;similarity&#8209;guided cross&#8209;lingual data selection can substitute for model scaling via targeted continual pretraining. Two publications (Interspeech 2025, IJCNLP&#8209;AACL 2025).</p>
+            </div>
+          </li>
+        </ul>
+
+        <div>
+          <div class="aside-block">
+            <h3>Education</h3>
+            <p><strong>IIIT Hyderabad</strong>, B.Tech + MS by Research in Electronics and Communication Engineering, Nov 2021 – May 2026. CGPA 9.2.</p>
+            <p>Department Gold Medal. Dean's List every year, 2021–2025.</p>
+          </div>
+          <div class="aside-block">
+            <h3>Earlier systems projects</h3>
+            <ul>
+              <li><b>Strife</b>, a distributed payment gateway in Go and gRPC: two&#8209;phase commit across bank servers, mutual TLS, idempotent transactions, offline queuing, WAL&#8209;based crash recovery.</li>
+              <li><b>Distributed file system</b> in C++ and MPI: heartbeat&#8209;based fault tolerance, replication, load&#8209;balanced placement, distributed search.</li>
+            </ul>
+          </div>
+          <div class="aside-block">
+            <h3>Skills</h3>
+            <dl class="skills">
+              <dt>Languages</dt><dd>C/C++, Python, Go, Bash, SQL</dd>
+              <dt>ML systems</dt><dd>PyTorch, DeepSpeed ZeRO, Hugging Face, vLLM, Fairseq, Kaldi</dd>
+              <dt>Infrastructure</dt><dd>Kubernetes, Docker, PostgreSQL, Apptainer, SLURM, AWS (S3, EFA), Prometheus, Grafana, gRPC, MPI</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact" class="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p>I'm looking for roles centred on training foundation models, including building the infrastructure that makes training at scale possible. Based in Hyderabad.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+      <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
+      <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
