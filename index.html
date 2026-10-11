@@ -278,7 +278,7 @@
     <div class="wrap">
       <p class="kicker">Research Engineer · Foundation models · BharatGen Vision Team · Hyderabad, India</p>
       <h1 id="hero-title">I build foundation models, and the infrastructure that trains them.</h1>
-      <p class="lede">At BharatGen I designed the 8&#8209;billion&#8209;token training corpus for <strong>Patram 1.5</strong>, the team's document foundation model, and am now training it on 128 GPUs. I first&#8209;authored <strong>DocLayout&#8209;VL</strong>, a layout foundation model accepted to ECCV 2026. And I wrote the infrastructure under both: the storage layer, the data&#8209;pipeline engine, the training framework, and the cluster tooling the team runs on.</p>
+      <p class="lede">At BharatGen I designed the task taxonomy and built the question&#8209;answer data for <strong>Patram 1.5</strong>, the team's document foundation model, which now has a 41.3&#8209;billion&#8209;token training corpus and a 7B model training on 128 GPUs. I first&#8209;authored <strong>DocLayout&#8209;VL</strong>, a layout foundation model accepted to ECCV 2026. And I wrote the infrastructure under both: the storage layer, the data&#8209;pipeline engine, the training framework, and the cluster tooling the team runs on.</p>
       <dl class="facts">
         <div><dt>Currently</dt><dd>Research Engineer, BharatGen<small>Sept 2025 – present</small></dd></div>
         <div><dt>Education</dt><dd>B.Tech + MS by Research (ECE), IIIT Hyderabad<small>2021 – 2026 · CGPA 9.2 · Department Gold Medal</small></dd></div>
@@ -300,7 +300,7 @@
           <span class="layer">Models</span>
           <div class="what">
             <h3>Patram 1.5 and DocLayout&#8209;VL</h3>
-            <p>Patram 1.5 is BharatGen's document vision&#8209;language model, now training on 128 GPUs on a corpus and task taxonomy I designed. DocLayout&#8209;VL reads a page and writes out its layout as a tree, grounding every node as a pixel mask, steered by natural&#8209;language prompts; accepted to ECCV 2026.</p>
+            <p>Patram 1.5 is BharatGen's document vision&#8209;language model, now training a 7B model on 128 GPUs, with a 41.3&#8209;billion&#8209;token corpus, a task taxonomy I designed and question&#8209;answer data I generated. DocLayout&#8209;VL reads a page and writes out its layout as a tree, grounding every node as a pixel mask, steered by natural&#8209;language prompts; accepted to ECCV 2026.</p>
           </div>
           <div class="metric"><b>79.4 vs 45.8</b><span>DocLayout&#8209;VL on HOPLay&#8209;Docs&#8209;Bench against the best fine&#8209;tuned baseline</span></div>
         </li>
@@ -336,9 +336,9 @@
           <span class="layer">Operations</span>
           <div class="what">
             <h3>Cluster&#8209;Supervision</h3>
-            <p>256 GPUs across 32 nodes, running training, inference and data generation side by side, managed from a single dashboard. A DaemonSet samples about 50 metric families on every node every 10 seconds, aligned to the wall clock so readings from different nodes line up exactly, into Postgres with 27 transition&#8209;based alert rules.</p>
+            <p>30 nodes with 240 H100 GPUs, running training, inference and data generation side by side, managed from a single dashboard. A collector on every node reports GPU, node and storage health into Postgres, with GPU readings every 10 seconds aligned to the wall clock so readings from different nodes line up exactly. 41 transition&#8209;based alert rules watch the fleet, and a watcher rebuilds a node that AWS has replaced.</p>
           </div>
-          <div class="metric"><b>~1 minute</b><span>for a replaced node to auto&#8209;rejoin the fleet, no manual step</span></div>
+          <div class="metric"><b>~1 minute</b><span>watcher cycle that notices a replaced node and rebuilds it into the cluster, no manual step</span></div>
         </li>
       </ol>
     </div>
@@ -381,7 +381,8 @@
             <div><dt>Built</dt><dd>A taxonomy of 186 atomic tasks across 12 capabilities and 86 document properties, with a compatibility matrix whose gates are parsed and checked by a verifier. A deficit&#8209;weighted sampler steers generation toward under&#8209;filled tasks, and every record carries the design version that produced it.</dd></div>
             <div><dt>Measured</dt><dd>
               <ul class="measured">
-                <li>8B tokens of training data generated against the spec; the delivered task mix matched the design</li>
+                <li>Current training corpus: 50.8M examples and 41.3B tokens across 13 groups of tasks, from OCR and HTML to question answering</li>
+                <li>The first question&#8209;answer corpus generated against the spec matched the designed task mix</li>
                 <li>Now training a 7B document model on 128 GPUs</li>
               </ul>
             </dd></div>
@@ -395,11 +396,12 @@
           </header>
           <dl>
             <div><dt>Problem</dt><dd>Building the corpus meant running GPU models over hundreds of millions of images for days on a shared cluster where nodes get reclaimed, servers die and processes get killed. Hand&#8209;written scripts lost or duplicated work on every crash.</dd></div>
-            <div><dt>Built</dt><dd>A data engine for running GPU models over very large image sets. Pipelines are declared as a graph of stages rather than hand&#8209;coded: stages fan out, merge, and route individual items down different paths at runtime, and every stage runs in parallel with the others so nothing sits idle waiting on the one before it. The same engine scales from one machine to the full fleet, and any machine can die at any moment: the run resumes where it left off with a few minutes of work redone, nothing lost and nothing processed twice.</dd></div>
+            <div><dt>Built</dt><dd>A data engine for running GPU models over very large image sets. Pipelines are declared as a graph of stages rather than hand&#8209;coded: stages fan out, merge, and route individual items down different paths at runtime, and every stage runs in parallel with the others so nothing sits idle waiting on the one before it. The same engine scales from one machine to the full fleet, and any machine can die at any moment: the run resumes where it left off with a few minutes of work redone, nothing lost and nothing processed twice. It can also drive vLLM servers that other people run: when a server goes to sleep or restarts, its workers pause and the work goes elsewhere instead of being marked failed.</dd></div>
             <div><dt>Measured</dt><dd>
               <ul class="measured">
                 <li>Largest run: 8.47M prompts through a 27B model, scaled live from 5 to 24 nodes (192 GPUs) unattended, 99.977% completed</li>
                 <li>+29% throughput on identical hardware after removing GPU idle time between batches</li>
+                <li>Later Patram 1.5 data runs drove up to 49 nodes through shared vLLM servers</li>
               </ul>
             </dd></div>
           </dl>
@@ -412,7 +414,7 @@
             <span class="tag">Storage · Go, Python</span>
           </header>
           <dl>
-            <div><dt>Problem</dt><dd>A training run over a document dataset touched about ten million small files. Shared filesystem metadata and S3's per&#8209;prefix request&#8209;rate ceiling, not bandwidth, set the pace for 256 GPUs.</dd></div>
+            <div><dt>Problem</dt><dd>A training run over a document dataset touched about ten million small files. Shared filesystem metadata and S3's per&#8209;prefix request&#8209;rate ceiling, not bandwidth, set the pace for 240 GPUs.</dd></div>
             <div><dt>Built</dt><dd>Datasets packed into uncompressed TAR and JSONL shards so every sample has a fixed byte address. One Go daemon per node deduplicates downloads to local NVMe and warms the kernel page cache; the daemon stays off the read path, so every worker reads at raw <code>pread</code> speed. Prometheus metrics, fleet deploy tooling and a supervisor loop around it.</dd></div>
             <div><dt>Measured</dt><dd>
               <ul class="measured">
@@ -450,15 +452,15 @@
       </div>
       <div class="posts">
         <a class="post" href="https://sriharib128.github.io/patram-ingest/">
-          <span class="tag">Patram&#8209;Ingest · Data pipelines · 15 min</span>
-          <h3>Crash&#8209;safe inference over hundreds of millions of images</h3>
-          <p>How Patram&#8209;Ingest keeps days&#8209;long GPU inference restartable: a four&#8209;state table, a write&#8209;fsync&#8209;mark commit protocol, failure classification, a worker pool that survives <code>kill -9</code>, and DAG pipelines from two extra states.</p>
+          <span class="tag">Patram&#8209;Ingest · Data pipelines · 20 min</span>
+          <h3>Agentic data pipelines at cluster scale</h3>
+          <p>How every data pipeline runs as a dynamic graph of agents where each sample takes its own route, with pipeline parallelism across many machines, a Postgres work queue, crash safety, error handling and automatic scaling and recovery. The engine that generated the Patram 1.5 training corpus.</p>
           <span class="read">Read the post</span>
         </a>
         <a class="post" href="https://sriharib128.github.io/patram-fs/">
-          <span class="tag">Patram&#8209;FS · Storage · 10 min</span>
-          <h3>Serving millions of training samples from packed shards</h3>
-          <p>Why per&#8209;file storage breaks at ten million files, how packed uncompressed shards keep a per&#8209;sample address, and how one daemon per node plus the kernel page cache brings a run down to about 200 storage requests.</p>
+          <span class="tag">Patram&#8209;FS · Storage · 25 min</span>
+          <h3>Serving training data from local disks</h3>
+          <p>How tens of millions of samples are packed into uncompressed shards with byte addresses, cached once per machine by a daemon that deduplicates requests, and read from a shared page cache, so Patram 1.5 trained with its data only in S3 and on local NVMe.</p>
           <span class="read">Read the post</span>
         </a>
       </div>
