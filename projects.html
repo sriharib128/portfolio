@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects · Srihari Bandarupalli</title>
+<meta name="description" content="Storage, data pipelines, training framework and cluster operations behind BharatGen's document models.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Srihari Bandarupalli</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="resume.pdf">Resume (PDF)</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow"><b>Projects</b></p>
+      <h1>The infrastructure <em>under the models</em></h1>
+      <p>Each layer unblocked the one above it. The models train on the framework; the framework trains on data the pipeline engine produced; the engine reads through the storage layer; and all of it runs on the cluster tooling at the bottom.</p>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="stack-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="stack-title">The stack, top to bottom</h2></div>
+      <ol class="strata" aria-label="Layers of the stack, from top to bottom">
+        <li class="stratum">
+          <span class="layer">Models</span>
+          <div><h3>Patram 1.5 and DocLayout&#8209;VL</h3><p>Patram 1.5 is BharatGen's document vision&#8209;language model, with a task taxonomy I designed and a 7B model training on 128 GPUs. DocLayout&#8209;VL writes a page's layout as a tree and grounds every node as a pixel mask. <a href="research.html">Research</a></p></div>
+          <div class="metric"><b>79.4 vs 45.8</b><span>DocLayout&#8209;VL on HOPLay&#8209;Docs&#8209;Bench against the best fine-tuned baseline</span></div>
+        </li>
+        <li class="stratum">
+          <span class="layer">Training</span>
+          <div><h3>Training framework</h3><p>The framework both models above are trained on. Models, datasets and evaluation are registered independently, so a new combination is a config change rather than new code.</p></div>
+          <div class="metric"><b>97.8%</b><span>of single&#8209;node all&#8209;reduce bandwidth retained across two nodes</span></div>
+        </li>
+        <li class="stratum">
+          <span class="layer">Pipelines</span>
+          <div><h3>Patram&#8209;Ingest</h3><p>The engine that generated the training data. A pipeline is declared as a graph of stages, and any machine can die mid-run with nothing lost and nothing processed twice.</p></div>
+          <div class="metric"><b>8.47M prompts</b><span>one run, scaled 5 → 24 nodes (192 GPUs) unattended, 99.977% completed</span></div>
+        </li>
+        <li class="stratum">
+          <span class="layer">Storage</span>
+          <div><h3>Patram&#8209;FS</h3><p>Datasets are packed into a few hundred large shards while every sample keeps its own byte address. Training reads from node-local NVMe at local-disk speed, with the shared network filesystem off the data path.</p></div>
+          <div class="metric"><b>10M → 200</b><span>storage requests per training run</span></div>
+        </li>
+        <li class="stratum">
+          <span class="layer">Operations</span>
+          <div><h3>Cluster&#8209;Supervision</h3><p>30 nodes with 240 H100 GPUs running training, inference and data generation side by side, managed from a single dashboard with 41 transition-based alert rules.</p></div>
+          <div class="metric"><b>~1 minute</b><span>for the watcher to notice a node AWS replaced and rebuild it into the cluster</span></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="work-title">Project details</h2>
+        <p>The problem, what I built, and what was measured.</p>
+      </div>
+      <div class="work-grid">
+
+        <article class="work" id="training-framework" aria-labelledby="w-train">
+          <header>
+            <h3 id="w-train">Training framework</h3>
+            <span class="tag">Training · PyTorch, DeepSpeed, Docker, NCCL</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>The trainer fit one document per GPU and ran out of memory during validation. Datasets, collators, models and the training loop were coupled, so every experiment needed its own script.</dd></div>
+            <div><dt>Built</dt><dd>A rebuild around two registries, so any registered dataset runs with any registered model from one YAML file. Non-compute tensors such as debug-only page images stay on the CPU instead of being copied into GPU memory, and validation reduces every mask to seven numbers on each GPU before anything is gathered. Multi-node training needed an EFA container image, an idempotent node-init script and the right NCCL environment; eight failure modes are documented, including NCCL silently falling back to TCP. This is the stack DocLayout&#8209;VL was trained on and the ancestor of <code>patram-core</code>, the team's current trainer.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>Documents per GPU per step: 1 → 6 for training, 1 → 8 for evaluation</li>
+                <li>49,976 images validated in one run, where validation used to run out of memory</li>
+                <li>97.8% of single&#8209;node all&#8209;reduce bandwidth retained across two nodes (16 ranks over EFA)</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><a href="https://sriharib128.github.io/training-stack/">Technical write-up</a></p>
+        </article>
+
+        <article class="work" id="patram-ingest" aria-labelledby="w-ingest">
+          <header>
+            <h3 id="w-ingest">Patram&#8209;Ingest</h3>
+            <span class="tag">Pipelines · Python, PostgreSQL, vLLM</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>Building the corpus meant running GPU models over hundreds of millions of images for days on a shared cluster where nodes get reclaimed, servers die and processes get killed. Hand-written scripts lost or duplicated work on every crash.</dd></div>
+            <div><dt>Built</dt><dd>A data engine for running GPU models over very large image sets. Pipelines are declared as a graph of stages rather than hand-coded: stages fan out, merge, and route individual items down different paths at runtime, and every stage runs in parallel with the others so nothing sits idle waiting on the one before it. The same engine scales from one machine to the full fleet, and any machine can die at any moment: the run resumes where it left off with a few minutes of work redone, nothing lost and nothing processed twice. It can also drive vLLM servers that other people run: when a server goes to sleep or restarts, its workers pause and the work goes elsewhere instead of being marked failed.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>Largest run: 8.47M prompts through a 27B model, scaled live from 5 to 24 nodes (192 GPUs) unattended, 99.977% completed</li>
+                <li>+29% throughput on identical hardware after removing GPU idle time between batches</li>
+                <li>Later Patram 1.5 data runs drove up to 49 nodes through shared vLLM servers</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><span class="note">Technical write-up is private for now. <a href="blogs.html#patram-ingest">Summary on the Blogs page</a>.</span></p>
+        </article>
+
+        <article class="work" id="patram-fs" aria-labelledby="w-fs">
+          <header>
+            <h3 id="w-fs">Patram&#8209;FS</h3>
+            <span class="tag">Storage · Go, Python</span>
+          </header>
+          <dl>
+            <div><dt>Problem</dt><dd>A training run over a document dataset touched about ten million small files. Shared filesystem metadata and S3's per-prefix request-rate ceiling, not bandwidth, set the pace for 240 GPUs.</dd></div>
+            <div><dt>Built</dt><dd>Datasets packed into uncompressed TAR and JSONL shards so every sample has a fixed byte address. One Go daemon per node deduplicates downloads to local NVMe and warms the kernel page cache; the daemon stays off the read path, so every worker reads at raw <code>pread</code> speed. Prometheus metrics, fleet deploy tooling and a supervisor loop around it.</dd></div>
+            <div><dt>Measured</dt><dd>
+              <ul class="measured">
+                <li>~10M → ~200 storage requests per training run, and annotation reads from 297.6 → 26.7 µs</li>
+                <li>Runs on every node of the cluster; training jobs no longer touch the shared filesystem</li>
+              </ul>
+            </dd></div>
+          </dl>
+          <p class="links"><span class="note">Technical write-up is private for now. <a href="blogs.html#patram-fs">Summary on the Blogs page</a>.</span></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="more-title">Also built</h2></div>
+      <ul class="also">
+        <li>
+          <h3>Cluster&#8209;Supervision<small>Operations · Postgres, Prometheus, Grafana</small></h3>
+          <p>A collector on every node reports GPU, node and storage health into Postgres, with GPU readings every 10 seconds aligned to the wall clock so readings from different nodes line up exactly. 41 transition-based alert rules watch the fleet, and a watcher rebuilds a node that AWS has replaced.</p>
+        </li>
+        <li>
+          <h3>Strife<small>Go, gRPC</small></h3>
+          <p>A distributed payment gateway: two-phase commit across bank servers, mutual TLS, idempotent transactions, offline queuing, WAL-based crash recovery.</p>
+        </li>
+        <li>
+          <h3>Distributed file system<small>C++, MPI</small></h3>
+          <p>Heartbeat-based fault tolerance, replication, load-balanced placement and distributed search.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer id="contact" class="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p>I'm looking for roles centred on training foundation models, including building the infrastructure that makes training at scale possible. Based in Hyderabad.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+      <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
+      <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

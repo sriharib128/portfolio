@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blogs · Srihari Bandarupalli</title>
+<meta name="description" content="Technical write-ups of the storage, data-pipeline and training systems built at BharatGen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Srihari Bandarupalli</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="blogs.html" aria-current="page">Blogs</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="resume.pdf">Resume (PDF)</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow"><b>Blogs</b></p>
+      <h1>Technical write-ups of systems built at <em>BharatGen</em></h1>
+      <p>Each write-up explains one system for an engineer with no background in it. The Patram&#8209;Ingest and Patram&#8209;FS write-ups are private for now, so those entries carry a summary only.</p>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="posts-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="posts-title">Write-ups</h2></div>
+      <div class="posts">
+        <article class="post" id="patram-ingest">
+          <div class="meta"><span class="tag">Patram&#8209;Ingest · Data pipelines</span><span class="tag private">Private for now</span></div>
+          <h2>Agentic data pipelines at cluster scale</h2>
+          <p>How every data pipeline runs as a dynamic graph of agents where each sample takes its own route, with pipeline parallelism across many machines, a Postgres work queue, crash safety, error handling and automatic scaling and recovery. The engine that generated the Patram 1.5 training corpus.</p>
+        </article>
+        <article class="post" id="patram-fs">
+          <div class="meta"><span class="tag">Patram&#8209;FS · Storage</span><span class="tag private">Private for now</span></div>
+          <h2>Serving training data from local disks</h2>
+          <p>How tens of millions of samples are packed into uncompressed shards with byte addresses, cached once per machine by a daemon that deduplicates requests, and read from a shared page cache, so Patram 1.5 trained with its data only in S3 and on local NVMe.</p>
+        </article>
+        <article class="post" id="training-framework">
+          <div class="meta"><span class="tag">Training framework · Training</span></div>
+          <h2>Rebuilding the training stack, then making it span machines</h2>
+          <p>How the model-training stack was rebuilt around a registry, why it was stuck at one document per GPU and how two memory fixes changed that, and how multi&#8209;node training over AWS EFA was made to work and measured.</p>
+          <a class="read" href="https://sriharib128.github.io/training-stack/">Read the write-up</a>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact" class="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p>I'm looking for roles centred on training foundation models, including building the infrastructure that makes training at scale possible. Based in Hyderabad.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+      <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
+      <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
