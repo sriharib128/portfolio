@@ -4,25 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About · Srihari Bandarupalli</title>
-<meta name="description" content="Experience, education and skills of Srihari Bandarupalli.">
+<meta name="description" content="Experience, education and skills of Srihari Bandarupalli, Research Engineer at BharatGen.">
+<meta property="og:title" content="About · Srihari Bandarupalli">
+<meta property="og:description" content="Experience, education and skills of Srihari Bandarupalli, Research Engineer at BharatGen.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316222e'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='%23faf7f1' text-anchor='middle'%3ESB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=6cde33ee">
 </head>
-<body id="top">
+<body>
 
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="index.html">Srihari Bandarupalli</a>
+    <a class="brand" href="index.html"><img class="brand-photo" src="assets/profile.jpg" width="40" height="40" alt="">Srihari Bandarupalli</a>
     <nav aria-label="Primary">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="research.html">Research</a></li>
-        <li><a href="blogs.html">Blogs</a></li>
         <li><a href="projects.html">Projects</a></li>
+        <li><a href="publications.html">Publications</a></li>
         <li><a href="about.html" aria-current="page">About</a></li>
       </ul>
     </nav>
@@ -31,75 +34,104 @@
 </header>
 
 <main id="main">
-  <div class="page-head">
-    <div class="wrap">
-      <p class="eyebrow"><b>About</b></p>
-      <h1>Experience, education and <em>skills</em></h1>
-      <p>Research Engineer on the BharatGen Vision Team in Hyderabad, working on document foundation models and the stack under them.</p>
-    </div>
-  </div>
 
-  <section class="section" id="experience" aria-labelledby="xp-title">
+  <header class="page-head about-head">
     <div class="wrap">
-      <div class="section-head"><h2 id="xp-title">Experience</h2></div>
-      <ul class="xp">
-        <li>
-          <span class="when">Sept 2025 – present</span>
-          <div>
-            <h3>BharatGen <span>· Research Engineer, Vision Team</span></h3>
-            <p>Foundational document vision&#8209;language models and the stack under them: storage, data pipelines, dataset specification and generation, distributed training, cluster operations. See <a href="projects.html">Projects</a> and <a href="research.html">Research</a>.</p>
-          </div>
-        </li>
-        <li>
-          <span class="when">May – July 2025</span>
-          <div>
-            <h3>Sprinklr <span>· Machine Learning Intern</span></h3>
-            <p>Built an enterprise VLM evaluation framework on production-like data distributions (published at AI-ML Systems 2025). Showed that targeted data curation lets a fine-tuned Qwen-7B match Qwen-32B accuracy at 80% lower compute, consolidating more than ten task-specific visual systems into one model.</p>
-          </div>
-        </li>
-        <li>
-          <span class="when">May 2023 – present</span>
-          <div>
-            <h3>LTRC, IIIT Hyderabad <span>· Undergraduate Researcher, Speech Processing Lab</span></h3>
-            <p>Low-resource ASR with Prof. Anil Kumar Vuppala. Showed that phonetic-similarity-guided cross-lingual data selection can substitute for model scaling via targeted continual pretraining. Two publications (Interspeech 2025, IJCNLP-AACL 2025).</p>
-          </div>
-        </li>
-      </ul>
+      <img class="portrait" src="assets/profile.jpg" width="480" height="480" alt="Portrait of Srihari Bandarupalli">
+      <div>
+      <p class="eyebrow">About</p>
+      <h1>About me</h1>
+      <p class="lede">I'm a Research Engineer at BharatGen, working on foundation vision&#8209;language models and the large&#8209;scale systems behind them. Recently that has meant building and training Patram 1.5, our foundation model for document understanding, which took model training, data generation and the infrastructure to bring them together.</p>
+      <p class="lede">I care about both what a model can do and how efficiently we can build and run it at scale, so I move between the two. Before BharatGen I worked on enterprise vision&#8209;language models at Sprinklr and on data&#8209;efficient speech recognition at LTRC, IIIT Hyderabad.</p>
+      </div>
     </div>
-  </section>
+  </header>
 
   <section class="section" aria-labelledby="edu-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="edu-title">Education and skills</h2></div>
-      <div class="cols">
-        <div class="block">
-          <h3>Education</h3>
-          <p><b>IIIT Hyderabad</b>, B.Tech + MS by Research in Electronics and Communication Engineering, Nov 2021 – May 2026. CGPA 9.2.</p>
-          <p>Department Gold Medal. Dean's List every year, 2021–2025.</p>
-        </div>
-        <div class="block">
-          <h3>Skills</h3>
-          <dl class="skills">
-            <dt>Languages</dt><dd>C/C++, Python, Go, Bash, SQL</dd>
-            <dt>ML systems</dt><dd>PyTorch, DeepSpeed ZeRO, Hugging Face, vLLM, Fairseq, Kaldi</dd>
-            <dt>Infrastructure</dt><dd>Kubernetes, Docker, PostgreSQL, Apptainer, SLURM, AWS (S3, EFA), Prometheus, Grafana, gRPC, MPI</dd>
-          </dl>
-        </div>
-      </div>
+      <div class="group-head"><h2 id="edu-title">Education</h2></div>
+      <ol class="rows">
+        <li>
+          <p class="when">2021 – 2026</p>
+          <div>
+            <h3>IIIT Hyderabad</h3>
+            <p class="where">B.Tech + MS by Research, Electronics and Communication Engineering</p>
+            <p class="honour"><span class="medal" aria-hidden="true"></span><span><b>Department Gold Medal</b>For the highest CGPA. Awarded at convocation, July 2026.</span></p>
+            <p>CGPA 9.2. Dean's List every year, 2021 – 2025.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
+
+  <section class="section" aria-labelledby="xp-title">
+    <div class="wrap">
+      <div class="group-head"><h2 id="xp-title">Experience</h2></div>
+      <ol class="rows">
+        <li>
+          <p class="when">Sep 2025 – now</p>
+          <div>
+            <h3>Research Engineer, BharatGen</h3>
+            <p class="where">Vision team · Hyderabad</p>
+            <p>I build foundation vision&#8209;language models and the infrastructure to train and run them at scale. I trained <a href="projects.html#patram-1-5">Patram 1.5</a> and built the data generation behind its OCR 3.0 and abstention capabilities, and I was first author of <a href="projects.html#doclayout-vl">DocLayout&#8209;VL</a> (ECCV 2026). Underneath, I built the training framework, the data&#8209;generation engine, the storage layer and the cluster tooling the team runs on.</p>
+          </div>
+        </li>
+        <li>
+          <p class="when">May – Jul 2025</p>
+          <div>
+            <h3>Intern, Sprinklr</h3>
+            <p class="where">Gurugram</p>
+            <p>Designed one vision&#8209;language model system to replace more than ten separate visual engines (logo detection, OCR, object detection and demographic analysis). Built ViLD, a framework for evaluating open models against proprietary ones on enterprise data, and fine&#8209;tuned Qwen 7B to match Qwen 32B with 80% less compute. The work became a paper at AI&#8209;ML Systems 2025.</p>
+          </div>
+        </li>
+        <li>
+          <p class="when">Apr 2023 – Sep 2025</p>
+          <div>
+            <h3>Undergraduate Researcher, LTRC</h3>
+            <p class="where">IIIT Hyderabad · with Prof. Anil Kumar Vuppala</p>
+            <p>Data&#8209;efficient speech recognition for low&#8209;resource languages. I showed that choosing cross&#8209;lingual training data by phonetic similarity can stand in for model scale: a 300M&#8209;parameter model matches Whisper Large v3 on Persian, Arabic and Urdu. Three papers, at IJCNLP&#8209;AACL 2025, Interspeech 2025 and a COLING 2025 workshop.</p>
+          </div>
+        </li>
+        <li>
+          <p class="when">Feb – May 2024</p>
+          <div>
+            <h3>Research Intern, Game Theory</h3>
+            <p class="where">Hyderabad</p>
+            <p>Led the camera calibration and triangulation pipeline and cut triangulation error from 30 cm to 3 cm. Fixed a memory leak in the in&#8209;house annotation tool so it runs at constant memory, and deployed the models to edge devices with ONNX.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="group-head"><h2 id="skills-title">Skills</h2></div>
+      <dl class="rows">
+        <div><dt class="when">Languages</dt><dd>Python, C/C++, Go, Bash, SQL</dd></div>
+        <div><dt class="when">Machine learning</dt><dd>PyTorch, DeepSpeed ZeRO, Hugging Face, vLLM, Fairseq, Kaldi</dd></div>
+        <div><dt class="when">Systems</dt><dd>Kubernetes, Docker, SLURM, Apptainer, PostgreSQL, AWS (S3, EFA), Prometheus, Grafana, gRPC, MPI</dd></div>
+      </dl>
+    </div>
+  </section>
+
 </main>
 
-<footer id="contact" class="contact">
+<footer class="contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <h2>Contact</h2>
-    <p>I'm looking for roles centred on training foundation models, including building the infrastructure that makes training at scale possible. Based in Hyderabad.</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
-      <a class="btn" href="resume.pdf">Resume (PDF)</a>
-      <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
-      <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+    <div class="contact-grid">
+      <div>
+        <h2 id="contact-title">Get in touch</h2>
+        <p>Email is the best way to reach me.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
+        <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+        <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      </div>
     </div>
+    <p class="fine">© 2026 Srihari Bandarupalli</p>
   </div>
 </footer>
 

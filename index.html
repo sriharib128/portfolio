@@ -4,25 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Srihari Bandarupalli · Research Engineer</title>
-<meta name="description" content="Srihari Bandarupalli, Research Engineer at BharatGen. Foundation models for documents and the infrastructure that trains them.">
+<meta name="description" content="Srihari Bandarupalli, Research Engineer at BharatGen. Foundation vision-language models and the large-scale systems behind them.">
+<meta property="og:title" content="Srihari Bandarupalli · Research Engineer">
+<meta property="og:description" content="Srihari Bandarupalli, Research Engineer at BharatGen. Foundation vision-language models and the large-scale systems behind them.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316222e'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='%23faf7f1' text-anchor='middle'%3ESB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=6cde33ee">
 </head>
-<body id="top">
+<body>
 
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="index.html">Srihari Bandarupalli</a>
+    <a class="brand" href="index.html"><img class="brand-photo" src="assets/profile.jpg" width="40" height="40" alt="">Srihari Bandarupalli</a>
     <nav aria-label="Primary">
       <ul>
         <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="research.html">Research</a></li>
-        <li><a href="blogs.html">Blogs</a></li>
         <li><a href="projects.html">Projects</a></li>
+        <li><a href="publications.html">Publications</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -31,64 +34,109 @@
 </header>
 
 <main id="main">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap hero-grid">
+
+  <section class="intro" aria-labelledby="intro-title">
+    <div class="wrap">
       <div>
-        <p class="eyebrow"><b>Research Engineer</b> · Foundation models</p>
-        <h1 id="hero-title">I build foundation models, and the <em>infrastructure that trains them.</em></h1>
-        <p class="lede">At BharatGen I designed the task taxonomy and built the question&#8209;answer data for <strong>Patram 1.5</strong>, the team's document foundation model, which now has a 41.3-billion-token training corpus and a 7B model training on 128 GPUs. I first-authored <strong>DocLayout&#8209;VL</strong>, a layout foundation model accepted to ECCV 2026. And I wrote the infrastructure under both: the storage layer, the data-pipeline engine, the training framework, and the cluster tooling the team runs on.</p>
-        <div class="cta">
-          <a class="btn btn-primary" href="research.html">Research</a>
-          <a class="btn" href="projects.html">Projects</a>
-          <a class="btn" href="resume.pdf">Resume (PDF)</a>
+        <div class="who">
+          <p class="eyebrow">Research Engineer · BharatGen</p>
+          <h1 id="intro-title">Srihari Bandarupalli</h1>
+          <p class="role">I build <b>foundation vision&#8209;language models</b> and the <b>large&#8209;scale systems</b> behind them.</p>
+        </div>
+        <div class="story">
+          <p>I'm a Research Engineer at BharatGen in Hyderabad. Most recently I trained <a href="https://bharatgen.com/blogs/introducing-patram-1-5/">Patram 1.5</a>, our foundation model for document understanding, and built the data generation behind two of its new capabilities, OCR 3.0 and abstention. Before that I was first author of <a href="https://doclayoutvl.github.io/">DocLayout&#8209;VL</a>, a layout model accepted at ECCV 2026.</p>
+          <p>I enjoy moving between model research and systems engineering. A training experiment can turn into a data problem, a memory bottleneck or a distributed&#8209;systems problem, and working out how those pieces fit together is the part I like most. That is how I came to build much of the stack under our models: the storage layer, the data&#8209;generation engine, the training framework and the cluster they run on.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="projects.html">See my work <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn" href="mailto:sriharib128@gmail.com">Email me</a>
         </div>
       </div>
-      <dl class="facts">
-        <div><dt>Currently</dt><dd>Research Engineer, BharatGen<small>Vision Team · Sept 2025 – present</small></dd></div>
-        <div><dt>Education</dt><dd>B.Tech + MS by Research (ECE), IIIT Hyderabad<small>2021 – 2026 · CGPA 9.2 · Department Gold Medal</small></dd></div>
-        <div><dt>Focus</dt><dd>Foundation models, ML infrastructure, distributed systems<small>Python · Go · C/C++</small></dd></div>
-        <div><dt>Contact</dt><dd><a href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a><small>Hyderabad, India</small></dd></div>
+      <dl class="glance">
+        <div><dt>Now</dt><dd>Research Engineer, BharatGen<small>Vision team · Hyderabad · since Sep 2025</small></dd></div>
+        <div><dt>Education</dt><dd>B.Tech + MS by Research, IIIT Hyderabad<small>Electronics and Communication Engineering · CGPA 9.2 · Department Gold Medal</small></dd></div>
+        <div><dt>Before</dt><dd>Sprinklr · LTRC, IIIT Hyderabad<small>Enterprise vision&#8209;language models · low&#8209;resource speech recognition</small></dd></div>
+        <div><dt>Work with</dt><dd>PyTorch, DeepSpeed, vLLM, Kubernetes<small>Python · Go · C/C++</small></dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="hl-title">
+  <section class="banner-wrap" aria-labelledby="patram-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="hl-title">Highlights</h2></div>
-      <ul class="highlights">
-        <li><span class="label">ECCV 2026</span><div><a href="research.html#doclayout-vl">DocLayout&#8209;VL</a> accepted, first author. It scores 79.4 on a new layout benchmark against 45.8 for the best fine-tuned baseline.</div></li>
-        <li><span class="label">Patram 1.5</span><div>Task taxonomy and question&#8209;answer data for the team's document model. The training corpus is 50.8M examples and 41.3B tokens, and a 7B model is training on 128 GPUs. <a href="research.html#patram-1-5">Details</a></div></li>
-        <li><span class="label">Pipelines</span><div>Patram&#8209;Ingest ran 8.47M prompts through a 27B model, scaling from 5 to 24 nodes unattended, with 99.977% completed. <a href="projects.html#patram-ingest">Details</a></div></li>
-        <li><span class="label">Storage</span><div>Patram&#8209;FS cut the storage requests in a training run from about 10 million to about 200. <a href="projects.html#patram-fs">Details</a></div></li>
-        <li><span class="label">Training</span><div>The training framework went from one document per GPU to six, and keeps 97.8% of single&#8209;node bandwidth across two nodes. <a href="projects.html#training-framework">Details</a></div></li>
-        <li><span class="label">IJCNLP-AACL 2025</span><div>First-author paper on speech recognition for low-resource languages. <a href="research.html#publications">All publications</a></div></li>
-      </ul>
+      <div class="banner">
+        <div>
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Just released · Nov 2026</p>
+          <h2 id="patram-title">Patram 1.5</h2>
+          <p class="tagline">Built in India, <em>best in the world.</em></p>
+          <p>BharatGen's <b>7&#8209;billion&#8209;parameter vision&#8209;language model for document intelligence</b>. Of the 21 vision&#8209;language models we tested, none scores higher, and it matches the largest of them at 97 times smaller.</p>
+          <p>It brings two new capabilities: <b>OCR 3.0</b>, where you ask for exactly what you need from a page in the format you need it, and <b>abstention</b>, the ability to say "I don't know". The weights are open under Apache 2.0.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://bharatgen.com/blogs/introducing-patram-1-5/">Read the launch blog <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn" href="https://huggingface.co/bharatgenai/Patram1.5-7B">Hugging Face</a>
+          </div>
+        </div>
+        <dl class="figures">
+          <div><dt>83</dt><dd><b>Top overall score</b>among the 21 vision&#8209;language models we tested</dd></div>
+          <div><dt>97×</dt><dd><b>Smaller</b>than the largest model it matches</dd></div>
+          <div><dt>21×</dt><dd><b>Fewer tokens</b>than Qwen3.5&#8209;9B with thinking on, at the same accuracy</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="news-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="news-title">News</h2></div>
+      <div class="tl tl-news">
+        <div class="tl-year">
+          <h3>2026</h3>
+          <ol>
+            <li class="k-release"><p class="tl-meta"><time datetime="2026-11">Nov</time><span>Release</span></p><p><a href="https://bharatgen.com/blogs/introducing-patram-1-5/">Patram 1.5</a> is out: top overall score among the 21 VLMs we tested.</p></li>
+            <li class="k-talk"><p class="tl-meta"><time datetime="2026-11-05">Nov</time><span>Lecture</span></p><p>Guest lecture at IIIT Hyderabad, Programming AI Accelerators: <a href="https://sriharib128.github.io/programming-for-ai-lecture/">offline VLM inference engines at scale</a>.</p></li>
+            <li class="k-talk"><p class="tl-meta"><time datetime="2026-10-24">Oct</time><span>Talk</span></p><p>vLLM Meetup Mumbai, IIT Bombay: <a href="https://sriharib128.github.io/patram-ingest-slides/">durable execution around vLLM</a>.</p></li>
+            <li class="k-paper"><p class="tl-meta"><time datetime="2026-09">Sep</time><span>Paper</span></p><p><a href="https://doclayoutvl.github.io/">DocLayout&#8209;VL</a> at ECCV 2026, Malmö. First author.</p></li>
+            <li class="k-award"><p class="tl-meta"><time datetime="2026-07">Jul</time><span>Award</span></p><p><b>Department Gold Medal</b> at IIIT Hyderabad for the highest CGPA.</p></li>
+          </ol>
+        </div>
+        <div class="tl-year">
+          <h3>2025</h3>
+          <ol>
+            <li class="k-paper"><p class="tl-meta"><time datetime="2025-12">Dec</time><span>Paper</span></p><p>IJCNLP&#8209;AACL 2025: <a href="https://aclanthology.org/2025.findings-ijcnlp.99/">Efficient ASR for Low&#8209;Resource Languages</a>. First author.</p></li>
+            <li class="k-paper"><p class="tl-meta"><time datetime="2025-10">Oct</time><span>Paper</span></p><p>AI&#8209;ML Systems 2025: <a href="https://arxiv.org/abs/2509.06994">VLMs&#8209;in&#8209;the&#8209;Wild</a>, from my Sprinklr internship. First author.</p></li>
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="explore-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="explore-title">Sections</h2></div>
+      <div class="section-head"><h2 id="explore-title">Explore</h2></div>
       <div class="tiles">
-        <a class="tile" href="research.html"><h3>Research</h3><p>DocLayout&#8209;VL, the Patram 1.5 task taxonomy and training data, and publications.</p><span class="go">Open Research</span></a>
-        <a class="tile" href="blogs.html"><h3>Blogs</h3><p>Technical write-ups of the systems built at BharatGen.</p><span class="go">Open Blogs</span></a>
-        <a class="tile" href="projects.html"><h3>Projects</h3><p>The infrastructure under the models: storage, pipelines, training and cluster operations.</p><span class="go">Open Projects</span></a>
-        <a class="tile" href="about.html"><h3>About</h3><p>Experience, education and skills.</p><span class="go">Open About</span></a>
+        <a class="tile" href="projects.html"><h3>Projects</h3><p>The models, and the stack under them from the cluster up.</p><span class="go">Projects →</span></a>
+        <a class="tile" href="publications.html"><h3>Publications</h3><p>Papers on document layout, speech recognition and VLM evaluation.</p><span class="go">Publications →</span></a>
+        <a class="tile" href="about.html"><h3>About</h3><p>Experience, education and skills.</p><span class="go">About →</span></a>
       </div>
     </div>
   </section>
+
 </main>
 
-<footer id="contact" class="contact">
+<footer class="contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <h2>Contact</h2>
-    <p>I'm looking for roles centred on training foundation models, including building the infrastructure that makes training at scale possible. Based in Hyderabad.</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
-      <a class="btn" href="resume.pdf">Resume (PDF)</a>
-      <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
-      <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+    <div class="contact-grid">
+      <div>
+        <h2 id="contact-title">Get in touch</h2>
+        <p>Email is the best way to reach me.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/srihari-bandarupalli">LinkedIn</a>
+        <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+        <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      </div>
     </div>
+    <p class="fine">© 2026 Srihari Bandarupalli</p>
   </div>
 </footer>
 
