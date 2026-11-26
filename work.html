@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work · Srihari Bandarupalli</title>
+<meta name="description" content="Patram 1.5, DocLayout-VL and the infrastructure under them: training framework, data generation, storage and the cluster.">
+<meta property="og:title" content="Work · Srihari Bandarupalli">
+<meta property="og:description" content="Patram 1.5, DocLayout-VL and the infrastructure under them: training framework, data generation, storage and the cluster.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316222e'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='%23faf7f1' text-anchor='middle'%3ESB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+<link rel="stylesheet" href="assets/site.css?v=6cde33ee">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img class="brand-photo" src="assets/profile.jpg" width="40" height="40" alt="">Srihari Bandarupalli</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="work.html" aria-current="page">Work</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="resume.pdf">Resume (PDF)</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Work</p>
+      <h1>From the cluster up to the model</h1>
+      <p class="lede">The models are the part people see. Under them is the stack I built so we could train them: a training framework, a data&#8209;generation engine, a storage layer and the cluster they all run on.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-label="The stack">
+    <div class="wrap">
+      <figure class="pyramid-fig">
+        <ol class="pyramid">
+          <li><a href="#patram-eval"><span class="lvl">Evaluation</span><span class="what">Patram&#8209;Eval<small>Leaderboards for every checkpoint</small></span></a></li>
+          <li><a href="#models"><span class="lvl">Models</span><span class="what">Patram 1.5 · DocLayout&#8209;VL<small>Foundation models for documents</small></span></a></li>
+          <li><a href="#patram-core"><span class="lvl">Training</span><span class="what">Patram&#8209;Core<small>The framework both models trained on</small></span></a></li>
+          <li><a href="#patram-ingest"><span class="lvl">Data generation</span><span class="what">Patram&#8209;Ingest<small>Durable GPU pipelines that build the training data</small></span></a></li>
+          <li><a href="#patram-fs"><span class="lvl">Storage</span><span class="what">Patram&#8209;FS<small>Training data served from every node's local disk</small></span></a></li>
+          <li><a href="#cluster-supervision"><span class="lvl">Cluster</span><span class="what">Cluster&#8209;Supervision<small>Kubernetes, monitoring and self&#8209;healing for 64 nodes and 512 GPUs</small></span></a></li>
+        </ol>
+        <figcaption>Each layer runs on the one below it. Select a layer to jump to it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="models" aria-labelledby="models-title">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="models-title">Models</h2>
+        <p>Foundation models for understanding documents.</p>
+      </div>
+
+      <article class="project" id="patram-1-5" aria-labelledby="p-patram">
+        <div class="side">
+          <p class="kicker">Released · Nov 2026</p>
+          <h3 id="p-patram">Patram 1.5</h3>
+          <p class="tech">7B vision&#8209;language model · BharatGen</p>
+          <p class="plinks"><a href="https://bharatgen.com/blogs/introducing-patram-1-5/">Launch blog</a><a href="https://huggingface.co/bharatgenai/Patram1.5-7B">Hugging Face</a></p>
+        </div>
+        <div class="body">
+          <p>BharatGen's foundation model for document understanding, matching models up to 97 times its size. I trained it: data preparation, multimodal sampling, sequence packing and distributed runs with DeepSpeed ZeRO. I also built the question&#8209;answer and OCR data generation behind its two new capabilities, <b>OCR 3.0</b> (ask for exactly what you need, in your format) and <b>abstention</b> (saying "I don't know").</p>
+          <dl class="figs">
+            <div><dt>83</dt><dd>top overall score among 21 VLMs tested</dd></div>
+            <div><dt>41.3B</dt><dd>tokens in the training corpus</dd></div>
+            <div><dt>128 GPUs</dt><dd>for the training runs</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="project" id="doclayout-vl" aria-labelledby="p-dl">
+        <div class="side">
+          <p class="kicker">ECCV 2026 · First author</p>
+          <h3 id="p-dl">DocLayout&#8209;VL</h3>
+          <p class="tech">Layout foundation model</p>
+          <p class="plinks"><a href="https://doclayoutvl.github.io/">Project page</a></p>
+        </div>
+        <div class="body">
+          <p>Makes document layout analysis open&#8209;set, hierarchical and promptable. Qwen&#8209;VL writes the page's layout as a tree, and a SAM&#8209;style decoder grounds every element as a pixel mask. Trained on HOPLay&#8209;Docs&#8209;80M, a dataset we built: 2.5M pages in 40 languages.</p>
+          <dl class="figs">
+            <div><dt>79.4</dt><dd>on our benchmark, against 45.8 for the best fine&#8209;tuned baseline</dd></div>
+            <div><dt>80M</dt><dd>masks in the training set</dd></div>
+            <div><dt>10</dt><dd>public benchmarks where it matches or beats per&#8209;dataset detectors zero&#8209;shot</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="infrastructure" aria-labelledby="infra-title">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="infra-title">Infrastructure</h2>
+        <p>The systems around the models: evaluation above them, and training, data, storage and the cluster below.</p>
+      </div>
+
+      <article class="project" id="patram-eval" aria-labelledby="p-eval">
+        <div class="side">
+          <p class="kicker">Evaluation</p>
+          <h3 id="p-eval">Patram&#8209;Eval</h3>
+          <p class="tech">Python · PostgreSQL · vLLM</p>
+        </div>
+        <div class="body">
+          <p>Every decision on Patram rests on these numbers: what to train next, whether a change helped, whether we are heading in the right direction. So they have to be right, and they have to arrive fast. Patram&#8209;Eval is the system that produces them, and where the comparisons for the Patram 1.5 launch were run.</p>
+          <p>The hard part is scale. The leaderboard covers 208 models, from 1B up to 3T parameters, the largest served across four nodes, on 105 benchmarks, and every model and benchmark pair needs its own serving setup, prompt, pre&#8209; and post&#8209;processing and scorer. Getting each of those right, and tuning 200+ serving recipes, was most of the work.</p>
+          <p>Running it by hand did not scale, so I redesigned it as one system. Every step, from rendering pages to generating, parsing, scoring and judging, is a task in one PostgreSQL work list, and an agent on each GPU node takes whatever fits its free GPUs and CPUs, reaching 1.76M generations in an hour. Benchmarks, parsers and scorers are plugins, results are never overwritten, and every number traces back to the exact request, model build and scorer version.</p>
+          <dl class="figs">
+            <div><dt>208 × 105</dt><dd>models × benchmarks on the leaderboard</dd></div>
+            <div><dt>~1 TB</dt><dd>of results in PostgreSQL, hundreds of millions of rows</dd></div>
+            <div><dt>Hours → 30 min</dt><dd>from a new checkpoint to the leaderboard, with no manual step</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="project" id="patram-core" aria-labelledby="p-core">
+        <div class="side">
+          <p class="kicker">Training</p>
+          <h3 id="p-core">Patram&#8209;Core</h3>
+          <p class="tech">PyTorch · DeepSpeed ZeRO · Hugging Face · NCCL</p>
+        </div>
+        <div class="body">
+          <p>The framework both models trained on. It used to fit one document per GPU and run on one machine. I rebuilt it so any dataset runs with any model from one config, fixed its memory use, made it train across machines over AWS EFA, and added multimodal sampling and sequence packing for Patram 1.5.</p>
+          <dl class="figs">
+            <div><dt>1 → 6</dt><dd>documents per GPU per training step</dd></div>
+            <div><dt>97.8%</dt><dd>of single&#8209;node bandwidth kept across two nodes</dd></div>
+            <div><dt>128 GPUs</dt><dd>for the Patram 1.5 training runs</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="project" id="patram-ingest" aria-labelledby="p-ingest">
+        <div class="side">
+          <p class="kicker">Data generation</p>
+          <h3 id="p-ingest">Patram&#8209;Ingest</h3>
+          <p class="tech">Python · PostgreSQL · vLLM</p>
+          <p class="plinks"><a href="https://sriharib128.github.io/patram-ingest-slides/">vLLM Meetup talk</a><a href="https://sriharib128.github.io/programming-for-ai-lecture/">IIIT Hyderabad lecture</a></p>
+        </div>
+        <div class="body">
+          <p>The engine that generated the Patram 1.5 training data: large models run over millions of images for weeks. A pipeline is a graph of stages, it scales from one machine to the whole fleet, and any machine can die mid&#8209;run with nothing lost or done twice.</p>
+          <dl class="figs">
+            <div><dt>41.3B</dt><dd>tokens generated for the Patram 1.5 corpus</dd></div>
+            <div><dt>5 → 24</dt><dd>nodes scaled unattended in one run of 8.47M prompts</dd></div>
+            <div><dt>99.977%</dt><dd>of that run's prompts completed</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="project" id="patram-fs" aria-labelledby="p-fs">
+        <div class="side">
+          <p class="kicker">Storage</p>
+          <h3 id="p-fs">Patram&#8209;FS</h3>
+          <p class="tech">Go · Python · S3 · NVMe</p>
+        </div>
+        <div class="body">
+          <p>Training was waiting on the shared filesystem, not the GPUs. Patram&#8209;FS packs datasets into large shards where every sample keeps its byte address, caches them once per node on local NVMe, and lets training read straight from local disk. Patram 1.5 trained this way.</p>
+          <dl class="figs">
+            <div><dt>10M → 200</dt><dd>storage requests per training run</dd></div>
+            <div><dt>11×</dt><dd>faster annotation reads</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="project" id="cluster-supervision" aria-labelledby="p-cs">
+        <div class="side">
+          <p class="kicker">Cluster</p>
+          <h3 id="p-cs">Cluster&#8209;Supervision</h3>
+          <p class="tech">Kubernetes (k3s) · PostgreSQL · Python · JavaScript</p>
+        </div>
+        <div class="body">
+          <p>The control room for our GPU fleet: one Kubernetes cluster and one dashboard in place of five single&#8209;machine sites and logging into nodes by hand.</p>
+          <ul class="features">
+            <li><b>Kubernetes</b> across 64 nodes and 512 GPUs, with a highly available PostgreSQL and a dashboard that runs on three replicas</li>
+            <li><b>Self&#8209;healing nodes:</b> a machine AWS replaces is noticed and rebuilt into the cluster in about a minute, with no one involved</li>
+            <li><b>Health every 10 seconds</b> from every node: GPUs, host, storage and S3, with a read&#8209;only SSH probe when a node stops reporting</li>
+            <li><b>41 alert rules</b> in three tiers, each with a one&#8209;line runbook</li>
+            <li><b>GPU usage and booking:</b> who is on which GPU, reservations, and idle bookings released automatically</li>
+            <li><b>Model hosting:</b> keeps shared vLLM servers alive, and lends their GPUs out by putting a server to sleep</li>
+            <li><b>Storage explorer</b> for the shared Lustre store and every node's NVMe, kept current without walking the disks</li>
+            <li><b>Self&#8209;service PostgreSQL</b> databases, one isolated cluster per project</li>
+            <li><b>Runs the Patram&#8209;FS daemon</b> on every node and tracks Patram&#8209;Ingest runs, with a remote stop</li>
+            <li><b>S3 browser</b>, and web apps on any node opened through the dashboard without an SSH tunnel</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="also-title">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="also-title">Also built</h2>
+        <p>Two distributed&#8209;systems projects, with code on GitHub.</p>
+      </div>
+      <ul class="also">
+        <li>
+          <h3>Strife</h3>
+          <span class="tech">Go · gRPC</span>
+          <p>A distributed payment gateway: two&#8209;phase commit across bank servers, mutual TLS, JWT authentication, idempotent transactions, offline payment queuing and crash recovery from a write&#8209;ahead log.</p>
+          <a href="https://github.com/sriharib128/Strife">Code on GitHub</a>
+        </li>
+        <li>
+          <h3>Distributed File System</h3>
+          <span class="tech">C++ · MPI</span>
+          <p>Fault tolerance through heartbeat monitoring, replication across nodes, load&#8209;balanced file placement and distributed search.</p>
+          <a href="https://github.com/sriharib128/Distributed-File-System">Code on GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <h2 id="contact-title">Get in touch</h2>
+        <p>Email is the best way to reach me.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="mailto:sriharib128@gmail.com">sriharib128@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/sriharib128/">LinkedIn</a>
+        <a class="btn" href="https://github.com/sriharib128">GitHub</a>
+        <a class="btn" href="resume.pdf">Resume (PDF)</a>
+      </div>
+    </div>
+    <p class="fine">© 2026 Srihari Bandarupalli</p>
+  </div>
+</footer>
+
+</body>
+</html>
