@@ -39,7 +39,7 @@
     <div class="wrap">
       <p class="eyebrow">Work</p>
       <h1>From the cluster up to the model</h1>
-      <p class="lede">The models are the part people see. Under them is the stack I built so we could train them: a training framework, a data&#8209;generation engine, a storage layer and the cluster they all run on.</p>
+      <p class="lede">I train document foundation models, and I built each layer they depend on: data generation, storage, distributed training, evaluation and the cluster itself. Together they form the one stack that makes it possible to train foundation models at this scale.</p>
     </div>
   </header>
 
@@ -74,7 +74,8 @@
           <p class="plinks"><a href="https://bharatgen.com/blogs/introducing-patram-1-5/">Launch blog</a><a href="https://huggingface.co/bharatgenai/Patram1.5-7B">Hugging Face</a></p>
         </div>
         <div class="body">
-          <p>BharatGen's foundation model for document understanding, matching models up to 97 times its size. I trained it: data preparation, multimodal sampling, sequence packing and distributed runs with DeepSpeed ZeRO. I also built the question&#8209;answer and OCR data generation behind its two new capabilities, <b>OCR 3.0</b> (ask for exactly what you need, in your format) and <b>abstention</b> (saying "I don't know").</p>
+          <p>Patram 1.5 is BharatGen's 7B vision&#8209;language foundation model for document understanding. It has the top overall score among the 21 VLMs we benchmarked, level with models up to 97 times its size, and it adds two capabilities: <b>OCR 3.0</b> (extract exactly what you ask for, in the format you ask for) and <b>abstention</b> (answer "I don't know" instead of guessing).</p>
+          <p>I worked on it across the whole stack. I built its data programme: a task taxonomy of <b>186 tasks across 12 capabilities</b> with a machine&#8209;checked compatibility matrix, and question&#8209;answer and OCR data generated through large&#8209;scale teacher distillation on up to 49 nodes, including the data behind OCR 3.0 and abstention. I then trained the model on <b>128 GPUs</b> with Hugging Face Trainer and DeepSpeed ZeRO, handling multimodal sampling, sequence packing, memory management and distributed validation. Every layer under it is a system I built: the data was generated with <a href="#patram-ingest">Patram&#8209;Ingest</a>, served by <a href="#patram-fs">Patram&#8209;FS</a>, trained on <a href="#patram-core">Patram&#8209;Core</a> and evaluated on <a href="#patram-eval">Patram&#8209;Eval</a>.</p>
           <dl class="figs">
             <div><dt>83</dt><dd>top overall score among 21 VLMs tested</dd></div>
             <div><dt>41.3B</dt><dd>tokens in the training corpus</dd></div>
@@ -91,7 +92,8 @@
           <p class="plinks"><a href="https://doclayoutvl.github.io/">Project page</a></p>
         </div>
         <div class="body">
-          <p>Makes document layout analysis open&#8209;set, hierarchical and promptable. Qwen&#8209;VL writes the page's layout as a tree, and a SAM&#8209;style decoder grounds every element as a pixel mask. Trained on HOPLay&#8209;Docs&#8209;80M, a dataset we built: 2.5M pages in 40 languages.</p>
+          <p>DocLayout&#8209;VL reframes document layout analysis as <b>open&#8209;set, hierarchical, promptable segmentation</b>. Layout models had been stuck with fixed label sets, flat labels and axis&#8209;aligned boxes. Ours takes a page and a natural&#8209;language prompt: a VLM generates the layout as a tree with open&#8209;vocabulary labels, and a hierarchy&#8209;aware grounding module, using tree&#8209;aware attention over parent, child and sibling nodes, turns every node into a pixel&#8209;accurate mask.</p>
+          <p>To train it we built <b>HOPLay&#8209;Docs&#8209;80M</b>: 2.5M pages in 40 languages with 80M pixel masks and 400K open&#8209;set labels. On our benchmark it more than doubles the scores of Gemini 3 Pro and GPT&#8209;5.2, and zero&#8209;shot it outperforms both, and matches or beats per&#8209;dataset specialist detectors, across 10 public benchmarks.</p>
           <dl class="figs">
             <div><dt>79.4</dt><dd>on our benchmark, against 45.8 for the best fine&#8209;tuned baseline</dd></div>
             <div><dt>80M</dt><dd>masks in the training set</dd></div>
@@ -116,9 +118,8 @@
           <p class="tech">Python · PostgreSQL · vLLM</p>
         </div>
         <div class="body">
-          <p>Every decision on Patram rests on these numbers: what to train next, whether a change helped, whether we are heading in the right direction. So they have to be right, and they have to arrive fast. Patram&#8209;Eval is the system that produces them, and where the comparisons for the Patram 1.5 launch were run.</p>
-          <p>The hard part is scale. The leaderboard covers 208 models, from 1B up to 3T parameters, the largest served across four nodes, on 105 benchmarks, and every model and benchmark pair needs its own serving setup, prompt, pre&#8209; and post&#8209;processing and scorer. Getting each of those right, and tuning 200+ serving recipes, was most of the work.</p>
-          <p>Running it by hand did not scale, so I redesigned it as one system. Every step, from rendering pages to generating, parsing, scoring and judging, is a task in one PostgreSQL work list, and an agent on each GPU node takes whatever fits its free GPUs and CPUs, reaching 1.76M generations in an hour. Benchmarks, parsers and scorers are plugins, results are never overwritten, and every number traces back to the exact request, model build and scorer version.</p>
+          <p>Patram&#8209;Eval is the evaluation system behind every decision on Patram, and where the Patram 1.5 launch comparisons were run. Its leaderboard spans <b>208 models on 105 benchmarks</b>, from 1B to 3T parameters, and each model and benchmark pair needs its own vLLM serving recipe, prompt, parser and scorer.</p>
+          <p>I redesigned its execution around <b>one shared work list that every node pulls from</b>, so the whole fleet coordinates itself with no manual scheduling. Benchmarks are cut into chunks that move through generate, parse, score and judge as rows in a single task table. A service on each GPU node claims the tasks that fit its free GPUs and CPU cores, and commits results in the same transaction that closes the task, so a node can die mid&#8209;run and its work goes to another. Results are insert&#8209;only and keyed by input hash, which traces every score to the exact request, model build and scorer version. At peak it ran <b>1.76M generations in an hour</b>.</p>
           <dl class="figs">
             <div><dt>208 × 105</dt><dd>models × benchmarks on the leaderboard</dd></div>
             <div><dt>~1 TB</dt><dd>of results in PostgreSQL, hundreds of millions of rows</dd></div>
@@ -134,9 +135,10 @@
           <p class="tech">PyTorch · DeepSpeed ZeRO · Hugging Face · NCCL</p>
         </div>
         <div class="body">
-          <p>The framework both models trained on. It used to fit one document per GPU and run on one machine. I rebuilt it so any dataset runs with any model from one config, fixed its memory use, made it train across machines over AWS EFA, and added multimodal sampling and sequence packing for Patram 1.5.</p>
+          <p>Patram&#8209;Core is the team's <b>custom distributed trainer</b>, built on Hugging Face Trainer and DeepSpeed ZeRO&#8209;3, and the framework both models were trained on. The code I started from hard&#8209;wired each training script to one model and one dataset, was pinned to a batch size of 1 per GPU and ran on a single node.</p>
+          <p>I rebuilt it around a dataset registry and a model registry, so any dataset trains with any model family from one YAML config. To fix memory I pinned non&#8209;compute tensors to CPU and reduced validation metrics per rank before any cross&#8209;GPU gather, which eliminated the OOMs and raised per&#8209;GPU batch size from <b>1 to 6–8</b>. I then tuned multi&#8209;node communication for <b>AWS EFA</b>, retaining 97.8% of all&#8209;reduce bandwidth across nodes, and added multimodal sampling and sequence packing for the Patram 1.5 runs.</p>
           <dl class="figs">
-            <div><dt>1 → 6</dt><dd>documents per GPU per training step</dd></div>
+            <div><dt>1 → 6–8</dt><dd>per&#8209;GPU batch size</dd></div>
             <div><dt>97.8%</dt><dd>of single&#8209;node bandwidth kept across two nodes</dd></div>
             <div><dt>128 GPUs</dt><dd>for the Patram 1.5 training runs</dd></div>
           </dl>
@@ -151,7 +153,8 @@
           <p class="plinks"><a href="https://sriharib128.github.io/patram-ingest-slides/">vLLM Meetup talk</a><a href="https://sriharib128.github.io/programming-for-ai-lecture/">IIIT Hyderabad lecture</a></p>
         </div>
         <div class="body">
-          <p>The engine that generated the Patram 1.5 training data: large models run over millions of images for weeks. A pipeline is a graph of stages, it scales from one machine to the whole fleet, and any machine can die mid&#8209;run with nothing lost or done twice.</p>
+          <p>Patram&#8209;Ingest is a <b>crash&#8209;safe, exactly&#8209;once distributed data engine</b> for GPU inference over 100M+ images, and it generated the Patram 1.5 training data. Jobs run for weeks on a fleet where nodes fail, leave and join, so every item's state is tracked in PostgreSQL: workers claim items under row locks, and results commit in a fixed order that limits what a crash can cost to the last uncommitted batch.</p>
+          <p>Pipelines are <b>DAGs</b> with fan&#8209;out, fan&#8209;in and per&#8209;item routing decided at runtime, each stage declared in a few lines of config. Moving the GPU stages to continuous batching against vLLM lifted throughput <b>29%</b> on identical hardware by removing the GPU idling between batches. A restarted node reclaims the items it was holding, and nodes can join or leave mid&#8209;run.</p>
           <dl class="figs">
             <div><dt>41.3B</dt><dd>tokens generated for the Patram 1.5 corpus</dd></div>
             <div><dt>5 → 24</dt><dd>nodes scaled unattended in one run of 8.47M prompts</dd></div>
@@ -167,7 +170,8 @@
           <p class="tech">Go · Python · S3 · NVMe</p>
         </div>
         <div class="body">
-          <p>Training was waiting on the shared filesystem, not the GPUs. Patram&#8209;FS packs datasets into large shards where every sample keeps its byte address, caches them once per node on local NVMe, and lets training read straight from local disk. Patram 1.5 trained this way.</p>
+          <p>Patram&#8209;FS is a <b>per&#8209;node Go storage daemon</b> that serves multi&#8209;TB datasets from S3 through local NVMe. Before it, a training run opened around ten million small files on the shared filesystem, overloading its metadata service for the whole cluster and leaving GPUs waiting on I/O.</p>
+          <p>Datasets are packed into about 200 large shards, and every sample is addressed by shard, byte offset and length. The daemon keeps one cache per node shared by every process, collapses concurrent requests for a shard into a single download, and stays off the read path: it returns a local path and offset, and the client reads straight from NVMe. That cut storage requests per run by <b>50,000×</b>, sped up annotation reads 11× through kernel page&#8209;cache warming, and took the shared filesystem off the training data path. It's now used across the team's training and data pipelines.</p>
           <dl class="figs">
             <div><dt>10M → 200</dt><dd>storage requests per training run</dd></div>
             <div><dt>11×</dt><dd>faster annotation reads</dd></div>
@@ -182,7 +186,7 @@
           <p class="tech">Kubernetes (k3s) · PostgreSQL · Python · JavaScript</p>
         </div>
         <div class="body">
-          <p>The control room for our GPU fleet: one Kubernetes cluster and one dashboard in place of five single&#8209;machine sites and logging into nodes by hand.</p>
+          <p>Cluster&#8209;Supervision is the control plane for our fleet of 64 nodes and 512 GPUs. It replaced five separate sites and logging into nodes over SSH with one k3s cluster: per&#8209;node collectors run as a DaemonSet, alert rules are SQL evaluated on a schedule, and a FastAPI dashboard reads everything from one PostgreSQL. What it covers:</p>
           <ul class="features">
             <li><b>Kubernetes</b> across 64 nodes and 512 GPUs, with a highly available PostgreSQL and a dashboard that runs on three replicas</li>
             <li><b>Self&#8209;healing nodes:</b> a machine AWS replaces is noticed and rebuilt into the cluster in about a minute, with no one involved</li>
@@ -210,13 +214,13 @@
         <li>
           <h3>Strife</h3>
           <span class="tech">Go · gRPC</span>
-          <p>A distributed payment gateway: two&#8209;phase commit across bank servers, mutual TLS, JWT authentication, idempotent transactions, offline payment queuing and crash recovery from a write&#8209;ahead log.</p>
+          <p>A distributed payment gateway. Transfers run as two&#8209;phase commits across bank servers, transactions are idempotent so a retry is never applied twice, payments made offline are queued, and a crashed server recovers from its write&#8209;ahead log. Connections use mutual TLS, with JWT for authentication.</p>
           <a href="https://github.com/sriharib128/Strife">Code on GitHub</a>
         </li>
         <li>
           <h3>Distributed File System</h3>
           <span class="tech">C++ · MPI</span>
-          <p>Fault tolerance through heartbeat monitoring, replication across nodes, load&#8209;balanced file placement and distributed search.</p>
+          <p>A fault&#8209;tolerant distributed file system. Files are replicated across nodes with load&#8209;balanced placement, heartbeat monitoring detects failed nodes, and search runs distributed across the cluster.</p>
           <a href="https://github.com/sriharib128/Distributed-File-System">Code on GitHub</a>
         </li>
       </ul>
